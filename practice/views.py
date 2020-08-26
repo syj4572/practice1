@@ -64,7 +64,7 @@ def post_remove(request, pk):
 
 def register(request):
     if request.method =='GET':
-        return render(request, 'register.html')
+        return render(request, 'registration/register.html')
     elif request.method == 'POST':
         userEmail = request.POST.get('userEmail', None)
         nickName = request.POST.get('nickName', None)
@@ -90,6 +90,6 @@ def register(request):
                 guardianBasicMsg=guardianBasicMsg
             )
             users.save()
-        return render(request, 'register.html', res_data)
+        return render(request, 'registration/register.html', res_data)
 
 
