@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+            <div class="row mt-5">
+                <div class="col-12 text-center">
+                    <h1>회원가입</h1>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12 text-center" style="color:red">
+                    {{error}}
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="userEmail">사용자 이메일</label>
+                            <input type="email" class="form-control" id="userEmail"  placeholder="사용자 이메일" name="userEmail" required>
+                            <small id="emailHelp" class="form-text text-muted">이메일 주소를 ID로 사용합니다.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="nickName">닉네임</label>
+                            <input type="text" class="form-control" id="nickName"  placeholder="사용자 이름" name="nickName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">비밀번호</label>
+                            <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="re-password">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" name="re-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">사진 선택</label>
+                            <input type="file" class="form-control" id="photo"  placeholder="첨부할 이미지 선택" name="photo" onchange="setThumbnail(event);" required>
+                            <div id="image_container" ></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianName">보호자명</label>
+                            <input type="text" class="form-control" id="guardianName"  placeholder="보호자명" name="guardianName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianCallNum">보호자 전화번호 입력</label>
+                            <input type="text" class="form-control" id="guardianCallNum" placeholder="보호자 전화번호 입력" name="guardianCallNum" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="guardianBasicMsg">보호자에게 보낼 문자 입력</label>
+                            <input type="text" class="form-control" id="guardianBasicMsg" placeholder="보호자에게 보낼 문자 입력" name="guardianBasicMsg" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">회원가입</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 text-center">
+            <a href="{% url 'index' %}">메인화면으로</a>
+            </div>
+     </div>
+
+<script>
+function setThumbnail(event) {
+        var reader = new FileReader();
+        tgt = document.querySelector("div#image_container");
+
+<!--        if (tgt2 = document.querySelector("#tempImg")) {-->
+<!--            tgt2.removeChild();-->
+<!--        }-->
+<!--        tgt2 = document.querySelector("#tempImg")-->
+<!--            tgt2.removeChild();-->
+
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("width", 100);
+            img.setAttribute("height", 100);
+            img.setAttribute("id", "tempImg");
+            tgt.appendChild(img);
+<!--            tgt.removeChild(img);-->
+        };
+        reader.readAsDataURL(event.target.files[0]);
+        }
+</script>
+
+{% endblock %}
